@@ -16,6 +16,6 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Main {
     public static void main(String[] args)
     {
-        // Nothing...
+        // Nothing... Nothing...
     }
 }
