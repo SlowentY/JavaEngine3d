@@ -8,21 +8,21 @@ import static org.lwjgl.opengl.GL40.*;
 
 public class SceneRender {
 
-    private ShaderProgram shaderProgram;
+    private Shader shader;
 
     public SceneRender() {
-        List<ShaderProgram.ShaderModuleData> shaderModuleDataList = new ArrayList<>();
-        shaderModuleDataList.add(new ShaderProgram.ShaderModuleData("resources/scene.vert", GL_VERTEX_SHADER));
-        shaderModuleDataList.add(new ShaderProgram.ShaderModuleData("resources/scene.frag", GL_FRAGMENT_SHADER));
-        shaderProgram = new ShaderProgram(shaderModuleDataList);
+        List<Shader.ShaderModuleData> shaderModuleDataList = new ArrayList<>();
+        shaderModuleDataList.add(new Shader.ShaderModuleData("resources/scene.vert", GL_VERTEX_SHADER));
+        shaderModuleDataList.add(new Shader.ShaderModuleData("resources/scene.frag", GL_FRAGMENT_SHADER));
+        shader = new Shader(shaderModuleDataList);
     }
 
     public void cleanup() {
-        shaderProgram.cleanup();
+        shader.cleanup();
     }
 
     public void render(Scene scene) {
-        shaderProgram.bind();
+        shader.bind();
 
         scene.getMeshMap().values().forEach(mesh -> {
                     glBindVertexArray(mesh.getVaoId());
@@ -32,6 +32,6 @@ public class SceneRender {
 
         glBindVertexArray(0);
 
-        shaderProgram.unbind();
+        shader.unbind();
     }
 }

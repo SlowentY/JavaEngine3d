@@ -8,11 +8,11 @@ import java.util.*;
 
 import static org.lwjgl.opengl.GL40.*;
 
-public class ShaderProgram {
+public class Shader {
 
     private final int programId;
 
-    public ShaderProgram(List<ShaderModuleData> shaderModuleDataList) {
+    public Shader(List<ShaderModuleData> shaderModuleDataList) {
         programId = glCreateProgram();
         if (programId == 0) {
             throw new RuntimeException("Could not create Shader");

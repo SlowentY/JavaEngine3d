@@ -3,7 +3,7 @@ package Engine3D.engine;
 import Engine3D.engine.graphics.Render;
 import Engine3D.engine.scene.Scene;
 
-public interface IAppLogic {
+public interface IMainInterface {
 
     void cleanup();
 

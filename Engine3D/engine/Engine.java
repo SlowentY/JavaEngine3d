@@ -6,7 +6,7 @@ import Engine3D.engine.scene.Scene;
 public class Engine {
 
     public static final int TARGET_UPS = 30;
-    private final IAppLogic appLogic;
+    private final IMainInterface mainInterface;
     private final Window window;
     private Render render;
     private boolean running;
@@ -14,22 +14,22 @@ public class Engine {
     private int targetFps;
     private int targetUps;
 
-    public Engine(String windowTitle, Window.WindowOptions opts, IAppLogic appLogic) {
-        window = new Window(windowTitle, opts, () -> {
+    public Engine(String windowTitle, Window.WindowOptions options, IMainInterface mainInterface) {
+        window = new Window(windowTitle, options, () -> {
             resize();
             return null;
         });
-        targetFps = opts.fps;
-        targetUps = opts.ups;
-        this.appLogic = appLogic;
+        targetFps = options.fps;
+        targetUps = options.ups;
+        this.mainInterface = mainInterface;
         render = new Render();
         scene = new Scene();
-        appLogic.init(window, scene, render);
+        mainInterface.init(window, scene, render);
         running = true;
     }
 
     private void cleanup() {
-        appLogic.cleanup();
+        mainInterface.cleanup();
         render.cleanup();
         scene.cleanup();
         window.cleanup();
@@ -55,12 +55,12 @@ public class Engine {
             deltaFps += (now - initialTime) / timeR;
 
             if (targetFps <= 0 || deltaFps >= 1) {
-                appLogic.input(window, scene, now - initialTime);
+                mainInterface.input(window, scene, now - initialTime);
             }
 
             if (deltaUpdate >= 1) {
                 long diffTimeMillis = now - updateTime;
-                appLogic.update(window, scene, diffTimeMillis);
+                mainInterface.update(window, scene, diffTimeMillis);
                 updateTime = now;
                 deltaUpdate--;
             }

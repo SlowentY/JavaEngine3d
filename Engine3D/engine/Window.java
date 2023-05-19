@@ -16,57 +16,70 @@ public class Window {
     private Callable<Void> resizeFunc;
     private int width;
 
-    public Window(String title, WindowOptions opts, Callable<Void> resizeFunc) {
+    public Window(String title, WindowOptions options, Callable<Void> resizeFunc) {
+
+        // Это чушь.
         this.resizeFunc = resizeFunc;
+
+        // Инициализация GLFW, библиотеки для отрисовки окна
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
+        // Различные параметры окна (видимость, resizable, версия контекста OpenGL)
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        if (opts.compatibleProfile) {
+
+        // Это чушь.
+        if (options.compatibleProfile) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
         } else {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         }
 
-        if (opts.width > 0 && opts.height > 0) {
-            this.width = opts.width;
-            this.height = opts.height;
-        } else {
+        // Получение размеров окна.
+        if (options.width > 0 && options.height > 0) { // заданные
+            this.width = options.width;
+            this.height = options.height;
+        } else { // из размеров монитора
             glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
             GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
             width = vidMode.width();
             height = vidMode.height();
         }
 
+        // Само собой создание окна.
         windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
         if (windowHandle == NULL) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
 
+        // Чушь.
         glfwSetFramebufferSizeCallback(windowHandle, (window, w, h) -> resized(w, h));
 
-
+        // Передаем функцию с колбэками на клавиатуру.
         glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
             keyCallBack(key, action);
         });
 
+        // Натягиваем OpenGL на окно
         glfwMakeContextCurrent(windowHandle);
 
-        if (opts.fps > 0) {
+        // Вертикальная синхронизация
+        if (options.fps > 0) {
             glfwSwapInterval(0);
         } else {
             glfwSwapInterval(1);
         }
 
+        // Показываем окно.
         glfwShowWindow(windowHandle);
 
+        // Снова размеры
         int[] arrWidth = new int[1];
         int[] arrHeight = new int[1];
         glfwGetFramebufferSize(windowHandle, arrWidth, arrHeight);
@@ -74,6 +87,7 @@ public class Window {
         height = arrHeight[0];
     }
 
+    // Чистки
     public void cleanup() {
         glfwFreeCallbacks(windowHandle);
         glfwDestroyWindow(windowHandle);

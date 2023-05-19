@@ -4,7 +4,7 @@ import Engine3D.engine.*;
 import Engine3D.engine.graphics.*;
 import Engine3D.engine.scene.Scene;
 
-public class Main implements IAppLogic {
+public class Main implements IMainInterface {
 
     public static void main(String[] args) {
         Main main = new Main();
