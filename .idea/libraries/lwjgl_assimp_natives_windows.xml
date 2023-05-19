@@ -86,6 +86,7 @@
       <root url="jar://$PROJECT_DIR$/lwjgl-release-3.3.2/lwjgl-zstd-natives-windows.jar!/" />
       <root url="jar://$PROJECT_DIR$/lwjgl-release-3.3.2/lwjgl-zstd.jar!/" />
       <root url="jar://$PROJECT_DIR$/lwjgl-release-3.3.2/lwjgl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lwjgl-release-3.3.2/joml-1.10.6-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
