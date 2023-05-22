@@ -25,6 +25,7 @@ public class SceneRender {
         shader.bind();
 
         scene.getMeshMap().values().forEach(mesh -> {
+                    mesh.getTexture().bind();
                     glBindVertexArray(mesh.getVaoId());
                     glDrawArrays(GL_TRIANGLES, 0, mesh.getNumVertices());
                 }

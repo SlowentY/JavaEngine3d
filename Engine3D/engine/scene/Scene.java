@@ -5,7 +5,6 @@ import Engine3D.engine.graphics.Mesh;
 import java.util.*;
 
 public class Scene {
-
     private Map<String, Mesh> meshMap;
 
     public Scene() {

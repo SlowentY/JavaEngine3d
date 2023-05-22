@@ -19,12 +19,31 @@ public class Main implements IMainInterface {
 
     @Override
     public void init(Window window, Scene scene, Render render) {
-        float[] positions = new float[]{
-                0.0f, 0.5f, 0.0f,
+
+        float lenght, height, weight;
+        lenght = 0.5f;
+        height = 0.5f;
+        weight = 0.0f;
+
+        float[] positions = new float[] {
+                0.5f, 0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f,
+                -0.5f,  -0.5f, 0.0f,
                 -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f
+                -0.5f, 0.5f, 0.0f,
+                0.5f,  0.5f, 0.0f};
+
+        float[] textCoords = new float[] {
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f
         };
-        Mesh mesh = new Mesh(positions, 3);
+
+        Texture texture = new Texture("resources/gip.png");
+        Mesh mesh = new Mesh(positions, textCoords, texture, 6);
         scene.addMesh("triangle", mesh);
     }
 
