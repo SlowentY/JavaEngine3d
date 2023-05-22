@@ -2,6 +2,7 @@ package Engine3D.engine.graphics;
 
 import Engine3D.engine.UniformMap;
 import Engine3D.engine.scene.Scene;
+import org.joml.Matrix4f;
 
 import java.util.*;
 
@@ -19,6 +20,8 @@ public class SceneRender {
         shader = new Shader(shaderModuleDataList);
         uniforms = new UniformMap(shader.getProgramId());
         uniforms.createUniform("projection");
+
+        uniforms.createUniform("model");
     }
 
     public void cleanup() {
@@ -28,6 +31,11 @@ public class SceneRender {
     public void render(Scene scene) {
         shader.bind();
         uniforms.setUniform("projection", scene.getProjection());
+
+        Matrix4f model = new Matrix4f();
+        model.setTranslation(0.0f, 0.0f, -4.0f);
+        model.setRotationXYZ((float) Math.toRadians(45.0f), 0.0f, (float) Math.toRadians(45.0f));
+        uniforms.setUniform("model", model);
 
         scene.getMeshMap().values().forEach(mesh -> {
                     mesh.getTexture().bind();

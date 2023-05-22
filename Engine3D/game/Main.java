@@ -21,19 +21,89 @@ public class Main implements IMainInterface {
     public void init(Window window, Scene scene, Render render) {
 
         float lenght, height, weight;
-        lenght = 0.5f;
-        height = 0.5f;
-        weight = 0.0f;
+        lenght = 1.0f;
+        height = 1.0f;
+        weight = 1.0f;
 
         float[] positions = new float[] {
-                0.5f, 0.5f, -1.0f,
-                0.5f, -0.5f, -1.0f,
-                -0.5f,  -0.5f, -1.0f,
-                -0.5f, -0.5f, -1.0f,
-                -0.5f, 0.5f, -1.0f,
-                0.5f,  0.5f, -1.0f};
+                -lenght, -height, -weight,
+                lenght, -height, -weight,
+                lenght,  height, -weight,
+                lenght, height, -weight,
+                -lenght, height, -weight,
+                -lenght,  -height, -weight,
+
+                -lenght, -height, weight,
+                lenght, -height, weight,
+                lenght,  height, weight,
+                lenght, height, weight,
+                -lenght, height, weight,
+                -lenght,  -height, weight,
+
+                -lenght, height, weight,
+                -lenght, height, -weight,
+                -lenght,  -height, -weight,
+                -lenght, -height, -weight,
+                -lenght, -height, weight,
+                -lenght,  height, weight,
+
+                lenght, height, weight,
+                lenght, height, -weight,
+                lenght,  -height, -weight,
+                lenght, -height, -weight,
+                lenght, -height, weight,
+                lenght,  height, weight,
+
+                -lenght, -height, -weight,
+                lenght, -height, -weight,
+                lenght,  -height, weight,
+                lenght, -height, weight,
+                -lenght, -height, weight,
+                -lenght,  -height, -weight,
+
+                -lenght, height, -weight,
+                lenght, height, -weight,
+                lenght,  height, weight,
+                lenght, height, weight,
+                -lenght, height, weight,
+                -lenght,  height, -weight};
 
         float[] textCoords = new float[] {
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f,
+
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f,
+
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f,
+
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f,
+
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f,
+
                 0.0f, 0.0f,
                 1.0f, 0.0f,
                 1.0f, 1.0f,
@@ -43,7 +113,7 @@ public class Main implements IMainInterface {
         };
 
         Texture texture = new Texture("resources/gip.jpg");
-        Mesh mesh = new Mesh(positions, textCoords, texture, 6);
+        Mesh mesh = new Mesh(positions, textCoords, texture, 36);
         scene.addMesh("planks", mesh);
     }
 
