@@ -44,7 +44,7 @@ public class Main implements IMainInterface {
 
         Texture texture = new Texture("resources/gip.png");
         Mesh mesh = new Mesh(positions, textCoords, texture, 6);
-        scene.addMesh("triangle", mesh);
+        scene.addMesh("planks", mesh);
     }
 
     @Override
