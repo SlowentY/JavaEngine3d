@@ -16,14 +16,14 @@ public class Engine {
 
     public Engine(String windowTitle, Window.WindowOptions options, IMainInterface mainInterface) {
         window = new Window(windowTitle, options, () -> {
-            resize();
+            this.resize();
             return null;
         });
         targetFps = options.fps;
         targetUps = options.ups;
         this.mainInterface = mainInterface;
         render = new Render();
-        scene = new Scene();
+        scene = new Scene(window.getWidth(), window.getHeight());
         mainInterface.init(window, scene, render);
         running = true;
     }
@@ -36,7 +36,7 @@ public class Engine {
     }
 
     private void resize() {
-        // Nothing to be done yet
+        scene.updateProjection(window.getWidth(), window.getHeight());
     }
 
     private void run() {

@@ -20,9 +20,13 @@ public class Render {
     }
 
     public void render(Window window, Scene scene) {
+
+        glEnable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.4f, 0.5f, 0.69f, 1.0f);
         glViewport(0, 0, window.getWidth(), window.getHeight());
 
         sceneRender.render(scene);
+
     }
 }

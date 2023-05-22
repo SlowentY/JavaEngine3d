@@ -26,12 +26,12 @@ public class Main implements IMainInterface {
         weight = 0.0f;
 
         float[] positions = new float[] {
-                0.5f, 0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                -0.5f,  -0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f,
-                -0.5f, 0.5f, 0.0f,
-                0.5f,  0.5f, 0.0f};
+                0.5f, 0.5f, -1.0f,
+                0.5f, -0.5f, -1.0f,
+                -0.5f,  -0.5f, -1.0f,
+                -0.5f, -0.5f, -1.0f,
+                -0.5f, 0.5f, -1.0f,
+                0.5f,  0.5f, -1.0f};
 
         float[] textCoords = new float[] {
                 0.0f, 0.0f,
@@ -42,7 +42,7 @@ public class Main implements IMainInterface {
                 -0.0f, 0.0f
         };
 
-        Texture texture = new Texture("resources/gip.png");
+        Texture texture = new Texture("resources/gip.jpg");
         Mesh mesh = new Mesh(positions, textCoords, texture, 6);
         scene.addMesh("planks", mesh);
     }
