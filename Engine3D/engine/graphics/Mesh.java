@@ -1,5 +1,6 @@
 package Engine3D.engine.graphics;
 
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL40;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
@@ -12,11 +13,13 @@ import static org.lwjgl.opengl.GL40.*;
 public class Mesh {
     private Texture texture;
     private int numVertices;
+    private Vector3f position;
     private int vaoId;
     private List<Integer> vboIdList;
 
-    public Mesh(float[] positions, float[] textCoords, Texture texture, int numVertices) {
+    public Mesh(float[] positions, float[] textCoords, Texture texture, Vector3f pos, int numVertices) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
+            this.position = pos;
             this.texture = texture;
             this.numVertices = numVertices;
             vboIdList = new ArrayList<>();
@@ -67,4 +70,6 @@ public class Mesh {
     {
         return texture;
     }
+
+    public Vector3f getPosition() { return position; }
 }

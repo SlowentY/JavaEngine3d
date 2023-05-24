@@ -16,6 +16,8 @@ public class Window {
     private Callable<Void> resizeFunc;
     private int width;
 
+    private MouseInput mouseInput;
+
     public Window(String title, WindowOptions options, Callable<Void> resizeFunc) {
 
         // Это чушь.
@@ -65,6 +67,7 @@ public class Window {
         glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
             keyCallBack(key, action);
         });
+        mouseInput = new MouseInput(windowHandle);
 
         // Натягиваем OpenGL на окно
         glfwMakeContextCurrent(windowHandle);
@@ -140,6 +143,10 @@ public class Window {
 
     public boolean windowShouldClose() {
         return glfwWindowShouldClose(windowHandle);
+    }
+
+    public MouseInput getMouseInput() {
+        return mouseInput;
     }
 
     public static class WindowOptions {

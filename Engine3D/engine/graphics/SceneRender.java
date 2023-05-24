@@ -22,6 +22,7 @@ public class SceneRender {
         uniforms.createUniform("projection");
 
         uniforms.createUniform("model");
+        uniforms.createUniform("view");
     }
 
     public void cleanup() {
@@ -31,17 +32,22 @@ public class SceneRender {
     public void render(Scene scene) {
         shader.bind();
         uniforms.setUniform("projection", scene.getProjection());
+        uniforms.setUniform("view", scene.getCamera().getViewMatrix());
 
         Matrix4f model = new Matrix4f();
         model.setTranslation(0.0f, 0.0f, -4.0f);
         model.setRotationXYZ((float) Math.toRadians(45.0f), 0.0f, (float) Math.toRadians(45.0f));
-        uniforms.setUniform("model", model);
 
         scene.getMeshMap().values().forEach(mesh -> {
-                    mesh.getTexture().bind();
-                    glBindVertexArray(mesh.getVaoId());
-                    glDrawArrays(GL_TRIANGLES, 0, mesh.getNumVertices());
-                }
+
+            model.setTranslation(mesh.getPosition());
+            uniforms.setUniform("model", model);
+
+            mesh.getTexture().bind();
+            glBindVertexArray(mesh.getVaoId());
+            glDrawArrays(GL_TRIANGLES, 0, mesh.getNumVertices());
+
+        }
         );
 
         glBindVertexArray(0);
