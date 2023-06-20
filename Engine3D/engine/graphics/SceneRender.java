@@ -34,18 +34,15 @@ public class SceneRender {
         uniforms.setUniform("projection", scene.getProjection());
         uniforms.setUniform("view", scene.getCamera().getViewMatrix());
 
-        Matrix4f model = new Matrix4f();
-        model.setTranslation(0.0f, 0.0f, -4.0f);
-        model.setRotationXYZ((float) Math.toRadians(45.0f), 0.0f, (float) Math.toRadians(45.0f));
-
-        scene.getMeshMap().values().forEach(mesh -> {
-
-            model.setTranslation(mesh.getPosition());
+        scene.getObjectMap().values().forEach(object -> {
+            Matrix4f model = new Matrix4f();
+            model.setTranslation(object.getMesh().getPosition());
+            model.mul(new Matrix4f().scaling(object.getMesh().getScale()));
             uniforms.setUniform("model", model);
 
-            mesh.getTexture().bind();
-            glBindVertexArray(mesh.getVaoId());
-            glDrawArrays(GL_TRIANGLES, 0, mesh.getNumVertices());
+            object.getMesh().getTexture().bind();
+            glBindVertexArray(object.getMesh().getVaoId());
+            glDrawArrays(GL_TRIANGLES, 0, object.getMesh().getNumVertices());
 
         }
         );

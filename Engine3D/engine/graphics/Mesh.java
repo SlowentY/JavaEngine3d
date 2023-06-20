@@ -14,6 +14,7 @@ public class Mesh {
     private Texture texture;
     private int numVertices;
     private Vector3f position;
+    private float scale;
     private int vaoId;
     private List<Integer> vboIdList;
 
@@ -23,6 +24,8 @@ public class Mesh {
             this.texture = texture;
             this.numVertices = numVertices;
             vboIdList = new ArrayList<>();
+
+            this.scale = 1.0f;
 
             vaoId = glGenVertexArrays();
             glBindVertexArray(vaoId);
@@ -57,7 +60,10 @@ public class Mesh {
         vboIdList.stream().forEach(GL40::glDeleteBuffers);
         glDeleteVertexArrays(vaoId);
     }
-
+    public void setPosition(Vector3f pos)
+    {
+        this.position = pos;
+    }
     public int getNumVertices() {
         return numVertices;
     }
@@ -72,4 +78,11 @@ public class Mesh {
     }
 
     public Vector3f getPosition() { return position; }
+    public void setScale(float scale)
+    {
+        this.scale = scale;
+    }
+    public float getScale() {
+        return scale;
+    }
 }

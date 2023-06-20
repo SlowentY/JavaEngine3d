@@ -7,7 +7,7 @@ import org.joml.Matrix4f;
 import java.util.*;
 
 public class Scene {
-    private Map<String, Mesh> meshMap;
+    private Map<String, Object> objectMap;
     private Matrix4f projection;
 
     private Camera camera;
@@ -20,12 +20,12 @@ public class Scene {
 
         projection = new Matrix4f();
         projection.setPerspective(FOV, (float) width / height, Z_NEAR, Z_FAR);
-        meshMap = new HashMap<>();
+        objectMap = new HashMap<>();
         camera = new Camera();
     }
 
-    public void addMesh(String meshId, Mesh mesh) {
-        meshMap.put(meshId, mesh);
+    public void addObject(String objectId, Object object) {
+        objectMap.put(objectId, object);
     }
 
     public void updateProjection(int width, int height) {
@@ -37,11 +37,11 @@ public class Scene {
     }
 
     public void cleanup() {
-        meshMap.values().stream().forEach(Mesh::cleanup);
+        objectMap.values().stream().forEach(Object::cleanup);
     }
 
-    public Map<String, Mesh> getMeshMap() {
-        return meshMap;
+    public Map<String, Object> getObjectMap() {
+        return objectMap;
     }
 
     public Camera getCamera() {

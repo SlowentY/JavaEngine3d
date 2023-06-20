@@ -2,12 +2,16 @@ package Engine3D.game;
 
 import Engine3D.engine.*;
 import Engine3D.engine.graphics.*;
+import Engine3D.engine.scene.Object;
 import Engine3D.engine.scene.Scene;
 import org.joml.*;
 
 import java.lang.Math;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glDrawArrays;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class Main implements IMainInterface {
 
@@ -75,6 +79,15 @@ public class Main implements IMainInterface {
                 -lenght, height, weight,
                 -lenght,  height, -weight};
 
+        float[] terrainPos = new float[] {
+                -lenght, 0.0f, -weight,
+                lenght, 0.0f, -weight,
+                lenght,  0.0f, weight,
+                lenght, 0.0f, weight,
+                -lenght, 0.0f, weight,
+                -lenght,  0.0f, -weight
+        };
+
         float[] textCoords = new float[] {
                 0.0f, 0.0f,
                 1.0f, 0.0f,
@@ -119,19 +132,43 @@ public class Main implements IMainInterface {
                 -0.0f, 0.0f
         };
 
-        Texture texture = new Texture("resources/gip.jpg");
+        float[] terrainTexCoords = new float[] {
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                -0.0f, 0.0f
+        };
 
-        Vector3f v1 = new Vector3f(2.0f, 5.0f, 3.0f);
-        Vector3f v2 = new Vector3f(4.0f, -1.0f, 2.0f);
-        Vector3f v3 = new Vector3f(-3.0f, 2.0f, -2.0f);
+        Texture texture = new Texture("resources/gip.jpg");
+        Texture grassTex = new Texture("resources/grass.jpg");
+
+        Vector3f v1 = new Vector3f(2.0f, 5.0f, -5.0f);
+        Vector3f v2 = new Vector3f(4.0f, -5.0f, -12.0f);
+        Vector3f v3 = new Vector3f(-3.0f, 2.0f, -7.0f);
 
         Mesh mesh1 = new Mesh(positions, textCoords, texture, v1, 36);
         Mesh mesh2 = new Mesh(positions, textCoords, texture, v2, 36);
         Mesh mesh3 = new Mesh(positions, textCoords, texture, v3, 36);
 
-        scene.addMesh("planks1", mesh1);
-        scene.addMesh("planks2", mesh2);
-        scene.addMesh("planks3", mesh3);
+        Mesh terrainMesh = new Mesh(terrainPos, terrainTexCoords, grassTex, new Vector3f(0.0f, 0.0f, 0.0f), 6);
+        terrainMesh.setScale(500.0f);
+
+        Object obj1 = new Object(mesh1, 10f, v1, new Vector3f(1.0f, 0.0f, 0.0f));
+        Object obj2 = new Object(mesh2, 10f, v2, new Vector3f(0.0f, 0.0f, 0.0f));
+        Object obj3 = new Object(mesh3, 10f, v3, new Vector3f(0.0f, 30.0f, -12.5f));
+
+        Object terrain = new Object(terrainMesh, 100f, new Vector3f(0.0f, -10.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f));
+
+        obj1.setAcceleration(new Vector3f(0.0f, -9.8f, 0.0f));
+        obj2.setAcceleration(new Vector3f(0.0f, -9.8f, 0.0f));
+        obj3.setAcceleration(new Vector3f(0.0f, -9.8f, 0.0f));
+
+        scene.addObject("planks1", obj1);
+        scene.addObject("planks2", obj2);
+        scene.addObject("planks3", obj3);
+        scene.addObject("terrain", terrain);
     }
 
     @Override
@@ -165,5 +202,10 @@ public class Main implements IMainInterface {
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
         // Nothing to be done yet
+        scene.getObjectMap().values().forEach(object -> {
+
+            object.simulate(diffTimeMillis, new Vector3f(0.0f, 0.0f, 0.0f));
+
+        });
     }
 }
